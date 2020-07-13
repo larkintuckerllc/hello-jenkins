@@ -1,13 +1,10 @@
 pipeline {
-    agent {
-        docker { image 'node:14-alpine' }
-    }
+    agent { docker { image 'golang' } }
     stages {
-        stage('Test') {
+        stage('build') {
             steps {
-                sh 'node --version'
+                sh 'go version'
             }
         }
     }
 }
-
