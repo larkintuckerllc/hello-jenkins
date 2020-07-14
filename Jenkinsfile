@@ -4,7 +4,12 @@ pipeline {
         GOCACHE = '/tmp/gocache'
         VERSION_MAJOR = '0'
         VERSION_MINOR = '1'
-        TAG = "${VERSION_MAJOR}.${VERSION_MINOR}.${env.BUILD_NUMBER}"
+        BUILD_NUMBER_BASE = '8'
+        VERSION_PATCH = """${sh(
+                returnStdout: true,
+                script: 'echo "$(( $env.BUILD_NUMBER - $BUILD_NUMBER_BASE ))"'
+            )}""" 
+        TAG = "${VERSION_MAJOR}.${VERSION_MINOR}.${env.VERSION_PATCH}"
     }
     stages {
         stage('build') {
