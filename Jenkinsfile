@@ -8,27 +8,10 @@ pipeline {
         VERSION_PATCH = "${env.BUILD_NUMBER.toInteger() - BUILD_NUMBER_BASE.toInteger()}"
     }
     stages {
-        stage('build') {
-            agent { docker { image 'golang:1.14' } }
-            steps {
-                sh 'go build'
-            }
-        }
-        stage('test') {
-            agent { docker { image 'golang:1.14' } }
-            steps {
-                sh 'go test ./...'
-            }
-        }
         stage('deploy') {
             agent any
             steps {
-                script {
-                    docker.withRegistry('', 'docker-hub') {
-                        def customImage = docker.build("sckmkny/hello-jenkins:$VERSION_MAJOR.$VERSION_MINOR.$VERSION_PATCH")
-                        customImage.push()
-                    }
-                }
+                echo "${env.BRANCH_NAME}"
             }
         }
     }
