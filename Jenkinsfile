@@ -2,7 +2,9 @@ pipeline {
     agent none
     environment { 
         GOCACHE = '/tmp/gocache'
-        TAG = "0.1.${env.BUILD_NUMBER}"
+        VERSION_MAJOR = '0'
+        VERSION_MINOR = '1'
+        TAG = "${VERSION_MAJOR}.${VERSION_MINOR}.${env.BUILD_NUMBER}"
     }
     stages {
         stage('build') {
