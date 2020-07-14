@@ -7,9 +7,10 @@ pipeline {
         stage('deploy') {
             agent any
             environment {
+                BUILD_NUMBER = '300'
                 VERSION_PATCH = """${sh(
                     returnStdout: true,
-                    script: 'echo "$(( ${env.BUILD_NUMBER} - $BUILD_NUMBER_BASE ))"'
+                    script: 'echo "$(( $BUILD_NUMBER - $BUILD_NUMBER_BASE ))"'
                 )}""" 
             }
             steps {
