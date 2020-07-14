@@ -3,12 +3,12 @@ pipeline {
     stages {
         stage('build') {
             steps {
-                go build
+                sh 'go build'
             }
         }
         stage('test') {
             steps {
-                go test
+                sh 'go test'
             }
         }
     }
