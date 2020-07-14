@@ -12,7 +12,7 @@ pipeline {
             environment {
                 VERSION_PATCH = """${sh(
                     returnStdout: true,
-                    script: 'echo "$(( $BUILD_NUMBER - $BUILD_NUMBER_BASE ))"'
+                    script: 'echo -n "$(( $BUILD_NUMBER - $BUILD_NUMBER_BASE ))"'
                 )}"""
             }
             steps {
