@@ -2,6 +2,7 @@ pipeline {
     agent none
     environment { 
         GOCACHE = '/tmp/gocache'
+        TAG = "0.1.${env.BUILD_NUMBER}"
     }
     stages {
         stage('build') {
@@ -21,7 +22,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', 'docker-hub') {
-                        def customImage = docker.build('sckmkny/hello-jenkins:latest')
+                        def customImage = docker.build("sckmkny/hello-jenkins:${TAG}")
                         customImage.push()
                     }
                 }
