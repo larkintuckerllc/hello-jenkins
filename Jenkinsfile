@@ -6,7 +6,10 @@ pipeline {
                 echo 'Starting to build docker image'
 
                 script {
-                    def customImage = docker.build("my-image:latest")
+                    docker.withRegistry('', 'docker-hub') {
+                        def customImage = docker.build('sckmkny/hello-jenkins:latest')
+                        customImage.push()
+                    }
                 }
             }
         }
