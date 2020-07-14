@@ -1,17 +1,13 @@
 pipeline {
-    agent { docker { image 'golang:1.14' } }
-    environment { 
-        GOCACHE = '/tmp/gocache'
-    }
+    agent any
     stages {
-        stage('build') {
+        stage('Build image') {
             steps {
-                sh 'go build'
-            }
-        }
-        stage('test') {
-            steps {
-                sh 'go test ./...'
+                echo 'Starting to build docker image'
+
+                script {
+                    def customImage = docker.build("my-image:latest")
+                }
             }
         }
     }
