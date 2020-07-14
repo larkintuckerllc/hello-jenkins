@@ -1,10 +1,24 @@
 pipeline {
-    agent any
+    agent none
+    environment { 
+        GOCACHE = '/tmp/gocache'
+    }
     stages {
-        stage('Build image') {
+        stage('build') {
+            agent { docker { image 'golang:1.14' } }
             steps {
-                echo 'Starting to build docker image'
-
+                sh 'go build'
+            }
+        }
+        stage('test') {
+            agent { docker { image 'golang:1.14' } }
+            steps {
+                sh 'go test ./...'
+            }
+        }
+        stage('deploy') {
+            agent any
+            steps {
                 script {
                     docker.withRegistry('', 'docker-hub') {
                         def customImage = docker.build('sckmkny/hello-jenkins:latest')
